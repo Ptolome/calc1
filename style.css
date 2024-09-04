@@ -1,0 +1,45 @@
+* {
+    box-sizing: border-box;
+}
+textarea{
+    background: black;
+    color:gray;
+    margin: 10px auto;
+    font-size: 28px;
+    border-radius: 10px;
+}
+.container{
+    max-width: 190px;
+    border: 1px solid ;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: rgb(186, 191, 197);
+
+}
+.button {
+    width: 30px;
+    height: 30px;
+  
+    text-align: center;
+    line-height: 30px;
+    border-radius: 30px;
+    color: antiquewhite;
+    border: 1px solid aquamarine;
+    cursor: pointer;
+}
+.button__group{
+    display: flex;
+    justify-content: space-around;
+    border-radius: 10px;
+    background-color: gray;
+    padding: 10px;
+    flex-wrap: wrap;
+    gap:10px;
+   
+    
+}
+.button:last-child{
+background-color: aquamarine;
+flex-grow: 1;
+color: gray;
+}
