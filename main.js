@@ -260,7 +260,5 @@ function action(pressed_button){
             break;
         
     }
-   console.log('num1',memory.num1)
-   console.log('num2',memory.num2)
-   console.log(memory.operation)
+ 
 }
