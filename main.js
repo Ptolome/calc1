@@ -31,7 +31,6 @@ const button_dot=createButton('.')
 const button_equals=createButton('=')
 
 
-
 buttons.append(
     button_ac,button_del,button_persent,button_devission,
     button_7,button_8,button_9,button_multypl,
@@ -40,12 +39,10 @@ buttons.append(
     button_0,button_dot,button_equals)
 
 
-
 function createButton(text){
     let button = document.createElement('div')
     button.textContent=text
     button.classList.add('button')
-
     return button
 }
 buttons.addEventListener('click',(event)=>{
@@ -56,13 +53,14 @@ document.addEventListener('keypress',(event)=>{
     console.log(event.code)
     action(event.code)
 })
-// создаем оБъект с 
+
 const memory ={
-    num1:null,
+    num1:0,
     num2:null,
     isNewNumber:true,
     operation:null,
-    isPressedOperatinButton:false,
+    isPressedEnter:false,
+    isPressedOperationButton:false,
     getResult(){
         
         if (this.operation =="+"){
@@ -84,23 +82,26 @@ const memory ={
 function action(pressed_button){
     
     function logicOfPressButtonOperation(operator){
-        if (!memory.isPressedOperatinButton){
+        if (memory.isPressedOperationButton) return              
             if (!memory.operation){
-            memory.num1=Number(winToEnter.value)
-            memory.operation=operator
-            memory.isNewNumber=true
-            memory.isPressedOperatinButton=true
+                console.log(1)
+                memory.isPressedEnter=false
+                memory.num1=Number(winToEnter.value)
+                memory.operation=operator
+                memory.isNewNumber=true
+                memory.isPressedOperationButton=true
+         
             console.log(1)
             } else if( memory.num2===null){
                 console.log(2)
                 memory.num2=Number(winToEnter.value)
-               
                 winToEnter.value = memory.getResult()
                 memory.operation=operator
                 memory.isNewNumber=true
                 memory.num1=Number(winToEnter.value)
-                memory.isPressedOperatinButton=true
-            } else {
+                memory.isPressedOperationButton=true
+              
+            } else if(!memory.isPressedEnter) {
                 console.log(3)
                 memory.num2=Number(winToEnter.value)
                 
@@ -108,10 +109,27 @@ function action(pressed_button){
                 
                 winToEnter.value=memory.num1
                 memory.operation=operator
-                memory.isPressedOperatinButton=true
+                memory.isPressedEnter=false
                 memory.isNewNumber=true
-            }}
+                memory.isPressedOperationButton=true
+            } else {
+                console.log(33)
+                memory.operation=operator
+                memory.isNewNumber=true
+                memory.isPressedEnter=false
+                winToEnter.value=memory.num1
+                memory.isPressedOperationButton=true
+            }
 
+    }
+    function pressNumber(number){
+        memory.isPressedOperationButton=false
+        if (memory.isNewNumber ) {
+            memory.isNewNumber=!memory.isNewNumber
+            winToEnter.value=number
+        } else {
+            winToEnter.value+=number
+        }
     }
     switch(pressed_button){
         case '+' :logicOfPressButtonOperation('+')
@@ -129,24 +147,31 @@ function action(pressed_button){
            
             break;
         case '=':
-           if ( !memory.isPressedOperatinButton)
-            { if (memory.num1!==null && memory.num2===null){
-            
+          
+            if ( memory.num2===null){
+                console.log('4')
                 memory.num2=Number(winToEnter.value)
-                
                 winToEnter.value=memory.getResult()
                 memory.num1=Number(winToEnter.value)
                 memory.isNewNumber=true
-                memory.isPressedOperatinButton=true
-                console.log('4')
-               } else if (memory.num1!==null && memory.num2!==null) { 
+                memory.isPressedEnter=true
+                
+               } else if ( memory.num2!==null && !memory.isPressedEnter) { 
+                console.log('5')
                 memory.num2=Number(winToEnter.value)
                 memory.num1=memory.getResult()
                 winToEnter.value=memory.num1
                 memory.isNewNumber=true
-                memory.isPressedOperatinButton=true
-                console.log('5')
-            }} 
+                memory.isPressedEnter=true
+                
+            } else {
+                console.log(6)
+                memory.num1=memory.getResult()
+                winToEnter.value=memory.num1
+                memory.isPressedEnter=true
+                memory.isNewNumber=true
+                
+            }
           
            
 
@@ -159,7 +184,7 @@ function action(pressed_button){
             break;
         case '⬅':
             winToEnter.value=winToEnter.value.slice(0,-1)
-            memory.num1=Number(winToEnter.value)
+            memory.num1=Number( winToEnter.value)
             break;
         case '.':
             if (!winToEnter.value.includes('.')){
@@ -177,88 +202,27 @@ function action(pressed_button){
             }
             
             break;
-        case '1':
-            memory.isPressedOperatinButton=false
-             if (memory.isNewNumber ) {
-                memory.isNewNumber=!memory.isNewNumber
-                winToEnter.value='1'
-            } else {
-                winToEnter.value+='1'
-            }
+        case '1':  pressNumber('1')
             break;
-        case '2':
-            memory.isPressedOperatinButton=false
-             if (memory.isNewNumber ) {
-                memory.isNewNumber=!memory.isNewNumber
-                winToEnter.value='2'
-            } else {
-                winToEnter.value+='2'
-            }
+        case '2':  pressNumber('2')
             break;
-        case '3':
-            memory.isPressedOperatinButton=false
-             if (memory.isNewNumber ) {
-                memory.isNewNumber=!memory.isNewNumber
-                winToEnter.value='3'
-            } else {
-                winToEnter.value+='3'
-            }
+        case '3': pressNumber('3')
             break;
-        case '4':
-            memory.isPressedOperatinButton=false
-             if (memory.isNewNumber ) {
-                memory.isNewNumber=!memory.isNewNumber
-                winToEnter.value='4'
-            } else {
-                winToEnter.value+='4'
-            }
+        case '4':pressNumber('4')
             break;
-        case '5':
-            memory.isPressedOperatinButton=false
-             if (memory.isNewNumber ) {
-                memory.isNewNumber=!memory.isNewNumber
-                winToEnter.value='5'
-            } else {
-                winToEnter.value+='5'
-            }
+        case '5':pressNumber('5')
             break;
-        case '6':
-            memory.isPressedOperatinButton=false
-            if (memory.isNewNumber ) {
-                memory.isNewNumber=!memory.isNewNumber
-                winToEnter.value="6"
-            } else {
-                winToEnter.value+='6'
-            }
+        case '6':pressNumber('6')
             break;
-        case '7':
-            memory.isPressedOperatinButton=false
-            if (memory.isNewNumber ) {
-                memory.isNewNumber=!memory.isNewNumber
-                winToEnter.value='7'
-            } else {
-                winToEnter.value+='7'
-            }
+        case '7':pressNumber('7')
             break;
-        case '8':
-            memory.isPressedOperatinButton=false
-            if (memory.isNewNumber ) {
-                memory.isNewNumber=!memory.isNewNumber
-                winToEnter.value='8'
-            } else {
-                winToEnter.value+='8'
-            }
+        case '8':pressNumber('8')
             break;
-        case '9':
-            memory.isPressedOperatinButton=false
-            if (memory.isNewNumber ) {
-                memory.isNewNumber=!memory.isNewNumber
-                winToEnter.value='9'
-            } else {
-                winToEnter.value+='9'
-            }
+        case '9':pressNumber('9')
             break;
         
     }
- 
+   console.log('num1',memory.num1)
+   console.log('num2',memory.num2)
+   console.log(memory.operation)
 }
