@@ -93,7 +93,6 @@ function action(pressed_button){
          
             console.log(1)
             } else if( memory.num2===null){
-                console.log(2)
                 memory.num2=Number(winToEnter.value)
                 winToEnter.value = memory.getResult()
                 memory.operation=operator
@@ -102,18 +101,14 @@ function action(pressed_button){
                 memory.isPressedOperationButton=true
               
             } else if(!memory.isPressedEnter) {
-                console.log(3)
                 memory.num2=Number(winToEnter.value)
-                
                 memory.num1=memory.getResult()
-                
                 winToEnter.value=memory.num1
                 memory.operation=operator
                 memory.isPressedEnter=false
                 memory.isNewNumber=true
                 memory.isPressedOperationButton=true
             } else {
-                console.log(33)
                 memory.operation=operator
                 memory.isNewNumber=true
                 memory.isPressedEnter=false
@@ -149,7 +144,6 @@ function action(pressed_button){
         case '=':
           
             if ( memory.num2===null){
-                console.log('4')
                 memory.num2=Number(winToEnter.value)
                 winToEnter.value=memory.getResult()
                 memory.num1=Number(winToEnter.value)
@@ -197,7 +191,7 @@ function action(pressed_button){
             if (memory.isNewNumber ) {
                 memory.isNewNumber=!memory.isNewNumber
                 winToEnter.value=0
-            } else if (winToEnter.value[0]!=0){
+            } else if (winToEnter.value[0]!=0 || winToEnter.value[1]=='.'){
                 winToEnter.value+='0'
             }
             
@@ -222,7 +216,5 @@ function action(pressed_button){
             break;
         
     }
-   console.log('num1',memory.num1)
-   console.log('num2',memory.num2)
-   console.log(memory.operation)
+  
 }
